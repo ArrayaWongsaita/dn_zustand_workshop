@@ -1,5 +1,6 @@
 import App from './App.jsx'
 import appSource from './App.jsx?raw'
+import productsSource from './data/products.json?raw'
 import headerSource from './components/Header.jsx?raw'
 import cartSliceSource from './store/cartSlice.js?raw'
 import catalogSliceSource from './store/catalogSlice.js?raw'
@@ -28,6 +29,7 @@ export default {
     'กับดัก: อย่าเอาค่าที่มีคอมโพเนนต์เดียวใช้ขึ้นไปไว้ใน store กลาง store มีไว้ให้ค่าที่หลายส่วนของแอปต้องเห็นตรงกัน ถ้าคำค้นหาถูกเก็บใน store ทุกตัวอักษรที่พิมพ์จะสร้าง action ใหม่และทำให้ทุกส่วนที่อ่าน store วาดใหม่โดยไม่จำเป็น',
   Demo: App,
   solutionFiles: [
+    { name: 'src/data/products.json', source: productsSource },
     { name: 'src/store/cartSlice.js', source: cartSliceSource },
     { name: 'src/store/catalogSlice.js', source: catalogSliceSource },
     { name: 'src/store/useBoundStore.js', source: boundStoreSource },

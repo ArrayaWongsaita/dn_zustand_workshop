@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
-import { pages } from '../pages/index.js'
 import { useSiteStore } from '../site-store.js'
-import { TIER_LABELS, TIER_ORDER } from './labels.js'
+import { TIER_LABELS } from './labels.js'
+import { pagesByTier } from './registry.js'
 
 // One row of the ladder. The current page's row is filled and a visited page's
 // row carries a check. A falsy record is defensive only: render it dimmed and
@@ -44,11 +44,7 @@ function SidebarRow({ page, currentSlug, visited }) {
 export default function Sidebar({ currentSlug }) {
   const visited = useSiteStore((state) => state.visited)
 
-  const groups = TIER_ORDER.map((tier) => ({
-    tier,
-    rows: pages.filter((page) => page && page.tier === tier),
-  }))
-  const missing = pages.filter((page) => !page)
+  const groups = pagesByTier()
 
   return (
     <aside className="flex w-64 shrink-0 flex-col gap-5 overflow-y-auto border-r bg-muted/20 p-4">
@@ -70,14 +66,6 @@ export default function Sidebar({ currentSlug }) {
               />
             ))}
           </div>
-        ))}
-        {missing.map((_, index) => (
-          <SidebarRow
-            key={`missing-${index}`}
-            page={null}
-            currentSlug={currentSlug}
-            visited={visited}
-          />
         ))}
       </nav>
       <Link to="/start" className="mt-auto text-xs underline">

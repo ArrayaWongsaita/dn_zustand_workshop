@@ -1,15 +1,12 @@
 import { Link } from 'react-router'
-import { pages } from '../pages/index.js'
-import { TIER_LABELS, TIER_ORDER } from './labels.js'
+import { TIER_LABELS } from './labels.js'
+import { pagesByTier, pagesInLadderOrder } from './registry.js'
 
 // "What is this, and where do I start": a heading, one line of copy, five tier
 // cards, and the start-here card last. No hero image, no version mentions.
 export default function Home() {
-  const groups = TIER_ORDER.map((tier) => ({
-    tier,
-    rows: pages.filter((page) => page && page.tier === tier),
-  }))
-  const first = pages.filter(Boolean).slice().sort((a, b) => a.number - b.number)[0]
+  const groups = pagesByTier()
+  const first = pagesInLadderOrder()[0]
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-8 px-8 py-10">
@@ -20,7 +17,7 @@ export default function Home() {
         </p>
       </header>
 
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid grid-cols-2 gap-6">
         {groups.map(({ tier, rows }, groupIndex) => (
           <section key={tier} className="rounded-xl border p-4">
             <h2 className="text-sm font-medium">{TIER_LABELS[tier]}</h2>
@@ -43,7 +40,7 @@ export default function Home() {
           </section>
         ))}
 
-        <section className="rounded-xl border p-4 sm:col-span-2">
+        <section className="col-span-2 rounded-xl border p-4">
           <Link to="/start" className="text-sm font-medium underline">
             เริ่มต้นใช้งาน
           </Link>

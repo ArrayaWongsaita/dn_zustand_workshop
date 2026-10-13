@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { pages } from '../pages/index.js'
 import { useSiteStore } from '../site-store.js'
 import { HEADINGS, TIER_LABELS } from './labels.js'
 import PrevNext from './PrevNext.jsx'
+import { pagesInLadderOrder } from './registry.js'
 import Section from './Section.jsx'
 import SolutionCode from './SolutionCode.jsx'
 
@@ -22,10 +22,7 @@ export default function PageTemplate({ page }) {
   }, [markVisited, page.slug])
 
   // Neighbours derive from page number, never from a second hand-written order.
-  const ordered = pages
-    .filter(Boolean)
-    .slice()
-    .sort((a, b) => a.number - b.number)
+  const ordered = pagesInLadderOrder()
   const index = ordered.findIndex((item) => item.slug === page.slug)
   const previous = ordered[index - 1] ?? null
   const next = ordered[index + 1] ?? null
@@ -58,8 +55,8 @@ export default function PageTemplate({ page }) {
       {/* 4. Acceptance criteria — the check glyph is decorative */}
       <Section heading={HEADINGS.criteria}>
         <ul className="grid gap-1.5 text-sm">
-          {page.criteriaTh.map((criterion) => (
-            <li key={criterion} className="flex gap-2">
+          {page.criteriaTh.map((criterion, criterionIndex) => (
+            <li key={criterionIndex} className="flex gap-2">
               <span aria-hidden="true" className="text-muted-foreground">
                 ✓
               </span>
@@ -80,7 +77,7 @@ export default function PageTemplate({ page }) {
       <Section heading={HEADINGS.hints}>
         <ol className="grid gap-1.5 text-sm">
           {page.hintsTh.map((hint, hintIndex) => (
-            <li key={hint} className="flex gap-2">
+            <li key={hintIndex} className="flex gap-2">
               <span className="text-muted-foreground">{hintIndex + 1}.</span>
               <span>{hint}</span>
             </li>

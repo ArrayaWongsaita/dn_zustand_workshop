@@ -1,6 +1,3 @@
-import { existsSync, readFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
-
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
@@ -89,11 +86,6 @@ async function waitForCatalog() {
   await screen.findByText(/^กาแฟ · 60 บาท$/)
 }
 
-// A file inside this page folder, which mirrors the learner's src/ layout.
-function pageFile(relative) {
-  return fileURLToPath(new URL(relative, import.meta.url))
-}
-
 describe('หน้า 9 — แยก store ออกเป็นส่วน ๆ', () => {
   beforeEach(() => {
     // Storage outlives a test, so a previous case's cart must not satisfy the
@@ -158,19 +150,24 @@ describe('หน้า 9 — แยก store ออกเป็นส่วน �
 
   test('store แยกเป็นสองไฟล์ src/store/cartSlice.js และ src/store/catalogSlice.js แล้วถูกประกอบกลับเป็น store เดียวที่ App.jsx ใช้', async () => {
     // Two separate stores would look identical on screen, so the split cannot
-    // be seen in the demo: this criterion checks the page's own file layout,
-    // which mirrors the learner's src/. One file per concern, assembled in the
-    // bound store that App imports.
-    const boundStorePath = pageFile('./store/useBoundStore.js')
-    expect(existsSync(pageFile('./store/cartSlice.js'))).toBe(true)
-    expect(existsSync(pageFile('./store/catalogSlice.js'))).toBe(true)
-    expect(existsSync(boundStorePath)).toBe(true)
+    // be seen in the demo. The seam is still the page record: its solutionFiles
+    // are exactly the files the learner writes, at the learner's own paths.
+    const { default: page } = await import('./index.js')
+    const byName = new Map(page.solutionFiles.map((file) => [file.name, file.source]))
+    expect([...byName.keys()]).toEqual(
+      expect.arrayContaining([
+        'src/store/cartSlice.js',
+        'src/store/catalogSlice.js',
+        'src/store/useBoundStore.js',
+        'src/App.jsx',
+      ]),
+    )
 
     // The bound store spreads both slices; App uses the bound store only.
-    const boundStore = readFileSync(boundStorePath, 'utf8')
-    expect(boundStore).toMatch(/createCartSlice/)
-    expect(boundStore).toMatch(/createCatalogSlice/)
-    expect(readFileSync(pageFile('./App.jsx'), 'utf8')).toMatch(/useBoundStore/)
+    const boundStore = byName.get('src/store/useBoundStore.js')
+    expect(boundStore).toMatch(/\.\.\.createCartSlice/)
+    expect(boundStore).toMatch(/\.\.\.createCatalogSlice/)
+    expect(byName.get('src/App.jsx')).toMatch(/useBoundStore/)
 
     // Driving the assembled store once shows both halves are served together.
     stubCatalogFetch()

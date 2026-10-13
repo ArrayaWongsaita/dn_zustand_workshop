@@ -1,6 +1,3 @@
-import { readFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
-
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
@@ -93,11 +90,6 @@ async function waitForCatalog() {
   await screen.findByText(/^กาแฟ · 60 บาท$/)
 }
 
-// A file inside this page folder, which mirrors the learner's src/ layout.
-function pageFile(relative) {
-  return fileURLToPath(new URL(relative, import.meta.url))
-}
-
 describe('หน้า 10 — ห่อ store ด้วย middleware', () => {
   beforeEach(() => {
     // Storage outlives a test, so a previous case's cart must not satisfy the
@@ -133,19 +125,23 @@ describe('หน้า 10 — ห่อ store ด้วย middleware', () => {
 
   test('โค้ดอัปเดต state ของตะกร้าเขียนแบบแก้ค่าใน state ตรง ๆ ไม่มี spread ซ้อนหลายชั้น และผลลัพธ์ยังเหมือนเดิม', async () => {
     // The cart's four nested updaters are the only ones immer rewrites, and
-    // "no nested spread" is a fact about the learner's own file. This mirrors
-    // page 9's store check: read the file the learner writes.
-    const cartSlice = readFileSync(pageFile('./store/cartSlice.js'), 'utf8')
+    // "no nested spread" is a fact about the learner's own file. The seam is
+    // the page record: its solutionFiles are exactly the files the learner
+    // writes, at the learner's own paths.
+    const { default: page } = await import('./index.js')
+    const cartSlice = page.solutionFiles.find(
+      (file) => file.name === 'src/store/cartSlice.js',
+    ).source
 
     // Direct mutations of the draft, not a rebuilt partial object.
     expect(cartSlice).toMatch(/state\.cart\.items\.push\(/)
     expect(cartSlice).toMatch(/item\.qty \+=/)
     expect(cartSlice).toMatch(/state\.cart\.items = state\.cart\.items\.filter\(/)
     expect(cartSlice).toMatch(/state\.cart\.note = note/)
-    // No multi-level spread of the cart, and nothing returned alongside a
-    // mutation (an immer updater mutates and returns nothing).
+    // No multi-level spread of the cart, and no updater rebuilds and returns a
+    // new object (an immer updater mutates the draft and returns nothing).
     expect(cartSlice).not.toMatch(/\.\.\.state\.cart/)
-    expect(cartSlice).not.toMatch(/\breturn\b/)
+    expect(cartSlice).not.toMatch(/return\s*\{/)
 
     // The behaviours those four updaters carry are unchanged: increment an
     // existing item, step the quantity up and down, set the note, and remove.
