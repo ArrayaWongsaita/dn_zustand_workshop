@@ -9,10 +9,10 @@ import persist from './08-persist/index.js'
 import slices from './09-slices/index.js'
 import middleware from './10-middleware/index.js'
 import sharedStore from './11-shared-store/index.js'
+import capstone from './12-capstone/index.js'
 
 // The registry: a hand-written array in ladder order. Ladder order is teaching
-// data, not a filesystem fact, so pages are never discovered by a glob. Pages
-// 01-11 exist: page 12 arrives with its brief (#12).
+// data, not a filesystem fact, so pages are never discovered by a glob.
 export const pages = [
   counter,
   multiCounter,
@@ -25,6 +25,7 @@ export const pages = [
   slices,
   middleware,
   sharedStore,
+  capstone,
 ]
 
 export default pages
