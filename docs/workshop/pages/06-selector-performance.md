@@ -3,6 +3,7 @@
 - **Tier**: 2
 - **Status**: written — [Page briefs: Tier 2 (pages 5-6: derived selector, selector performance)](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/9)
 - **Brief format**: [spec home, § Page briefs](../README.md#page-briefs)
+- **ชื่อหน้า (titleTh)**: selector กับปัญหาการ render
 
 ## Learning objective
 
