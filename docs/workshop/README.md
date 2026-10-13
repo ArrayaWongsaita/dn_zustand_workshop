@@ -19,11 +19,11 @@ A **build session**, not a learner. Learners never see this repository (see [ADR
 | Ladder and difficulty calibration | this file, § Ladder | settled |
 | Page brief format | this file, § Page briefs | settled |
 | Page briefs | [`pages/NN-<slug>.md`](pages/) (12 files) | not yet written — owned by *Page briefs: Tier 1* ([#8](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/8)), *Tier 2* ([#9](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/9)), *Tier 3a* ([#10](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/10)), *Tier 3b* ([#11](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/11)), *Tier 3c* ([#12](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/12)) |
-| Page content model | [`content-model.md`](content-model.md) | not yet written — owned by *Workshop page content model and authoring layout* ([#5](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/5)) |
+| Page content model | [`content-model.md`](content-model.md) | settled |
 | Site shell and page template | [`site-shell.md`](site-shell.md) | not yet written — owned by *Site shell and page template prototype* ([#7](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/7)) |
 | Learner setup and verification | [`learner-setup.md`](learner-setup.md) | not yet written — owned by *Learner setup and verification workflow* ([#6](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/6)) |
 | Vocabulary | [`GLOSSARY.md`](../../GLOSSARY.md) | settled |
-| Framing decisions | [`docs/adr/`](../adr/) | settled (0001–0003) |
+| Framing decisions | [`docs/adr/`](../adr/) | settled (0001–0004) |
 | Handoff assembly and build order | this file, § Handoff | not yet written — owned by *Assemble the workshop spec for handoff* ([#13](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/13)) |
 
 ## Ladder
@@ -80,11 +80,11 @@ Standing preferences for the whole effort:
 
 ## Page briefs
 
-One file per page: `docs/workshop/pages/NN-<slug>.md`, where `NN` is the page number in the ladder. The `<slug>` is provisional and may be aligned with the site's URL slugs when the content model lands (owned by [#5](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/5)).
+One file per page: `docs/workshop/pages/NN-<slug>.md`, where `NN` is the page number in the ladder. The `<slug>` is final: the brief filename stem, the page's folder under `src/workshop/pages/`, and its URL segment are one string (see [content-model.md](content-model.md)).
 
 A brief is **decision-complete**: a build session turns one brief into one page module without making any teaching decision of its own. English is the language of the design prose; every learner-facing string is Thai and is quoted in the brief as final copy, not as direction.
 
-Provisional section skeleton — to be reconciled with the content model once [#5](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/5) lands:
+Section skeleton. Every learner-facing string here is Thai final copy and is carried verbatim into the page record ([content-model.md](content-model.md)); the surrounding prose is English design material for the build session.
 
 ```markdown
 ## Learning objective
@@ -109,7 +109,7 @@ The trap this page exposes and where the page must call it out.
 Store shape, actions, components.
 
 ## Solution code
-The source, or a pointer to the file that holds it.
+The files the learner must write, in display order, by the same learner-project-relative paths the site shows in the solution reveal ([content-model.md](content-model.md)).
 ```
 
 ## Handoff

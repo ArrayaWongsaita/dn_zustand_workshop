@@ -29,6 +29,11 @@ The single reason one ladder page is harder than the page before it: a new API, 
 _ไทย_: ประเภทความยาก
 _Avoid_: difficulty, level, category
 
+**Trap**:
+A way the store silently misbehaves that a page both exposes and fixes; each trap has exactly one owning page.
+_ไทย_: กับดัก
+_Avoid_: pitfall, gotcha, mistake
+
 **Page**:
 One exercise in the ladder: its own URL, exercise brief, goal demo, hints, and solution reveal.
 _ไทย_: หน้า
@@ -45,9 +50,9 @@ _ไทย_: เกณฑ์ความสำเร็จ
 _Avoid_: requirements, checklist, rubric
 
 **Goal demo**:
-The always-visible component on a page that exhibits the behaviour the learner must reproduce.
+The always-visible component on a page that exhibits the behaviour the learner must reproduce; it is also the solution, so the page has one implementation, not two.
 _ไทย_: เดโมเป้าหมาย
-_Avoid_: demo, example, preview, spec
+_Avoid_: demo, example, preview, spec, solution demo
 
 **Goal behaviour**:
 What the goal demo does, stated concretely enough to implement.
@@ -55,14 +60,9 @@ _ไทย_: พฤติกรรมเป้าหมาย
 _Avoid_: requirement, feature, behaviour (bare)
 
 **Solution reveal**:
-The click-to-open section on a page that shows the solution demo and its solution code.
+The click-to-open section on a page that reveals the solution code; the solution running live is the page's goal demo.
 _ไทย_: ส่วนเฉลย
 _Avoid_: solution, answer, เฉลย (bare)
-
-**Solution demo**:
-The live, runnable implementation inside a solution reveal.
-_ไทย_: เดโมเฉลย
-_Avoid_: demo, reference app
 
 **Solution code**:
 The source of the implementation inside a solution reveal.

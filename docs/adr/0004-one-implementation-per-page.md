@@ -1,0 +1,5 @@
+# One implementation per page serves both the goal demo and the solution
+
+Each page has exactly one implementation of its behaviour: it is what the learner sees as the goal demo, and it is what the solution reveal publishes as source. The reveal mounts no second copy. ADR-0002 asks the content model to keep the goal demo and the solution in sync, and one artifact is the only sync that cannot drift: two implementations would need a stated discipline and would diverge silently, and the learner never sees the site's source to catch it. A second mount would also share the page's store, which is a module-level singleton, so on page 11 — where the store is global by design — the reveal's demo would move whenever the goal demo above it moved. Consequence: the reveal shows code only, and ADR-0002's live solution demo is the goal demo already on the page; the glossary keeps a single term, **Goal demo**.
+
+Considered options: a separate goal implementation kept in sync with the solution by convention; a second mount of the same component inside the reveal, optionally resetting the store when it opens; a reveal with code only and no live demo anywhere on the page.
