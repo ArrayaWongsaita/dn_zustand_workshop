@@ -18,10 +18,10 @@ A **build session**, not a learner. Learners never see this repository (see [ADR
 | --- | --- | --- |
 | Ladder and difficulty calibration | this file, § Ladder | settled |
 | Page brief format | this file, § Page briefs | settled |
-| Page briefs | [`pages/NN-<slug>.md`](pages/) (12 files) | not yet written — owned by *Page briefs: Tier 1* ([#8](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/8)), *Tier 2* ([#9](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/9)), *Tier 3a* ([#10](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/10)), *Tier 3b* ([#11](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/11)), *Tier 3c* ([#12](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/12)) |
+| Page briefs | [`pages/NN-<slug>.md`](pages/) (12 files) | pages 1–4 written by *Page briefs: Tier 1* ([#8](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/8)); pages 5–6 written by *Page briefs: Tier 2* ([#9](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/9)); pages 7–8 written by *Page briefs: Tier 3a* ([#10](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/10)); pages 9–10 owned by *Tier 3b* ([#11](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/11)), 11–12 by *Tier 3c* ([#12](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/12)) |
 | Page content model | [`content-model.md`](content-model.md) | settled |
-| Site shell and page template | [`site-shell.md`](site-shell.md) | not yet written — owned by *Site shell and page template prototype* ([#7](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/7)) |
-| Learner setup and verification | [`learner-setup.md`](learner-setup.md) | not yet written — owned by *Learner setup and verification workflow* ([#6](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/6)) |
+| Site shell and page template | [`site-shell.md`](site-shell.md) | settled |
+| Learner setup and verification | [`learner-setup.md`](learner-setup.md) | settled |
 | Vocabulary | [`GLOSSARY.md`](../../GLOSSARY.md) | settled |
 | Framing decisions | [`docs/adr/`](../adr/) | settled (0001–0004) |
 | Handoff assembly and build order | this file, § Handoff | not yet written — owned by *Assemble the workshop spec for handoff* ([#13](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/13)) |
@@ -61,7 +61,9 @@ The accepted twelve-page framing. Page numbers are stable ids; they are the `NN`
 
 **Traps.** Each trap has exactly one owning page — the page that introduces *and* fixes it (the `Trap this page owns` column). A page never documents a trap whose fix is taught later; page 2's rule (one selector per field) avoids the problem that page 6 explains and solves.
 
-**Deliberately not in the ladder.** Named once here so no brief reaches for them: `createStore`/`useStore` (the vanilla, non-React store), `subscribe` and transient updates, `createWithEqualityFn`/`zustand/traditional`, `subscribeWithSelector`, `skipHydration`/SSR, TypeScript, and routing.
+**Deliberately not in the ladder.** Named once here so no brief reaches for them: `createStore`/`useStore` (the vanilla, non-React store), `subscribe` and transient updates, `createWithEqualityFn`/`zustand/traditional`, `subscribeWithSelector`, `skipHydration`/SSR, `version`/`migrate` on `persist`, TypeScript, and routing.
+
+Outside the ladder the site also carries the **start-here page** at `/start` — site chrome, not a page record: it holds the one-time project setup and the setup check ([learner-setup.md](learner-setup.md)).
 
 Every API claim is grounded in [docs/research/zustand-v5-api.md on the throwaway `research/zustand-v5-api` branch](https://github.com/ArrayaWongsaita/dn_zustand_workshop/blob/research/zustand-v5-api/docs/research/zustand-v5-api.md).
 
@@ -84,9 +86,11 @@ One file per page: `docs/workshop/pages/NN-<slug>.md`, where `NN` is the page nu
 
 A brief is **decision-complete**: a build session turns one brief into one page module without making any teaching decision of its own. English is the language of the design prose; every learner-facing string is Thai and is quoted in the brief as final copy, not as direction.
 
-Section skeleton. Every learner-facing string here is Thai final copy and is carried verbatim into the page record ([content-model.md](content-model.md)); the surrounding prose is English design material for the build session.
+Section skeleton. Every learner-facing string here is Thai final copy and is carried verbatim into the page record ([content-model.md](content-model.md)); the surrounding prose is English design material for the build session. The brief's header block also names the page's **`titleTh`**, the Thai heading the shell renders — final copy like every other Thai string, and the one learner-facing string that is not inside a section.
 
 ```markdown
+- **ชื่อหน้า (titleTh)**: <the Thai page heading, final copy>
+
 ## Learning objective
 The Zustand concept and exact API surface introduced, and what the learner must already know.
 
