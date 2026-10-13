@@ -2,7 +2,7 @@
 
 The decision-complete curriculum spec for the workshop site. This file is the **spec home**: read it first, then follow the parts below.
 
-> **Status**: decision-complete. Every part below is settled; the build session starts once this map closes. The one physical step still outstanding is recorded under § Handoff → *Still unsettled at handoff*.
+> **Status**: decision-complete. Every part below is settled; the build session starts once this map closes. See § Handoff → *At handoff*.
 
 ## Destination
 
@@ -159,7 +159,6 @@ The built workshop is done when all of the following hold.
 - Learner-facing language is Thai; the only English a learner sees is the raw fetch error detail on pages 7 and 12.
 - **Not** part of done: deployment and hosting — the human handles it after the spec (map, Out of scope).
 
-### Still unsettled at handoff
+### At handoff
 
-- **The spec is not committed or pushed.** `origin/main` holds only the initial commit; the spec home, every brief, the ADRs and the glossary live in the working tree and in local commits, while the tickets on the map link to `main`. The spec must be committed and pushed before a build session starts, or those links 404.
-- **The test toolchain is specified but not installed.** [learner-setup.md](learner-setup.md) fixes Vitest + React Testing Library and `npm test`; `package.json` has neither yet. Installing and configuring them is build step 4, not a design decision.
+The spec is committed and pushed to `main`, so every link from the map and the build tickets resolves. Nothing is left to decide — the build starts at build step 1. The one piece of setup that does not exist yet is the test toolchain: [learner-setup.md](learner-setup.md) fixes Vitest + React Testing Library and `npm test`, but `package.json` has neither, and installing them is build step 4.
