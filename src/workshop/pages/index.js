@@ -8,10 +8,11 @@ import asyncFetch from './07-async-fetch/index.js'
 import persist from './08-persist/index.js'
 import slices from './09-slices/index.js'
 import middleware from './10-middleware/index.js'
+import sharedStore from './11-shared-store/index.js'
 
 // The registry: a hand-written array in ladder order. Ladder order is teaching
 // data, not a filesystem fact, so pages are never discovered by a glob. Pages
-// 01-10 exist: pages 11-12 arrive with their briefs (#11-#12).
+// 01-11 exist: page 12 arrives with its brief (#12).
 export const pages = [
   counter,
   multiCounter,
@@ -23,6 +24,7 @@ export const pages = [
   persist,
   slices,
   middleware,
+  sharedStore,
 ]
 
 export default pages
