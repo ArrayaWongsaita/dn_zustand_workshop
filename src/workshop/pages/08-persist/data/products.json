@@ -1,0 +1,5 @@
+[
+  { "id": "coffee", "name": "กาแฟ", "price": 60 },
+  { "id": "tea", "name": "ชา", "price": 45 },
+  { "id": "orange", "name": "น้ำส้ม", "price": 55 }
+]
