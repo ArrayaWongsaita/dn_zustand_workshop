@@ -23,8 +23,8 @@ src/workshop/
       App.jsx
       store/
         cartSlice.js
-        uiSlice.js
-        useSlicesStore.js
+        catalogSlice.js
+        useBoundStore.js
     …
 ```
 
@@ -128,9 +128,9 @@ Learner-facing copy is Thai and lives in the record verbatim. The brief quotes t
 
 The brief is authoritative for the English design prose (learning objective, goal behaviour, traps to document, solution design); the record is what the site actually renders. The duplication is deliberate: the spec is a frozen handoff artifact, and the site must not parse its own documentation. Changing learner-facing copy means changing the brief and the record together.
 
-## Hints are a flat list for now
+## Hints are a flat list
 
-`hintsTh` is an ordered array and the template renders all of it. Whether hints escalate one at a time remains unspecified on the map; if that lands, it changes the template, not the record.
+`hintsTh` is an ordered array and the template renders all of it, all visible from the start. Progressive hint escalation (one hint → more) was ruled out of scope on the map: it turns on learner-stall data that cannot exist before the workshop is live. Hints therefore ship flat, and neither the record nor the template carries escalation state.
 
 ## Authoring a page
 
@@ -142,6 +142,6 @@ The brief is authoritative for the English design prose (learning objective, goa
 6. Add the record to `src/workshop/pages/index.js` at its ladder position.
 7. Load the page and check all seven sections render.
 
-## No stub page was built here
+## Page 01 built as a prototype
 
-This ticket produced the schema only. Building page 01 against it is the first task of *Site shell and page template prototype* ([#7](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/7)), which this ticket unblocks.
+This ticket produced the schema only. Page 01 was then built against it as the first task of *Site shell and page template prototype* ([#7](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/7)); it exists at `src/workshop/pages/01-counter/` and validated the record shape end to end. Its behaviour and code are final, but its record still holds placeholder Thai copy and both files carry `PROTOTYPE NOTE` comments — finalizing it (final Thai copy, comments removed) is build step 2 of the handoff ([README.md, § Handoff](README.md#handoff)).

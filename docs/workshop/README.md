@@ -2,7 +2,7 @@
 
 The decision-complete curriculum spec for the workshop site. This file is the **spec home**: read it first, then follow the parts below.
 
-> **Status**: in progress. Parts marked *not yet written* are owned by open planning tickets on the map "Map: Zustand workshop curriculum spec" (issue #1).
+> **Status**: decision-complete. Every part below is settled; the build session starts once this map closes. The one physical step still outstanding is recorded under § Handoff → *Still unsettled at handoff*.
 
 ## Destination
 
@@ -18,13 +18,13 @@ A **build session**, not a learner. Learners never see this repository (see [ADR
 | --- | --- | --- |
 | Ladder and difficulty calibration | this file, § Ladder | settled |
 | Page brief format | this file, § Page briefs | settled |
-| Page briefs | [`pages/NN-<slug>.md`](pages/) (12 files) | pages 1–4 written by *Page briefs: Tier 1* ([#8](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/8)); pages 5–6 written by *Page briefs: Tier 2* ([#9](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/9)); pages 7–8 written by *Page briefs: Tier 3a* ([#10](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/10)); pages 9–10 owned by *Tier 3b* ([#11](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/11)), 11–12 by *Tier 3c* ([#12](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/12)) |
+| Page briefs | [`pages/NN-<slug>.md`](pages/) (12 files) | pages 1–4 written by *Page briefs: Tier 1* ([#8](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/8)); pages 5–6 written by *Page briefs: Tier 2* ([#9](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/9)); pages 7–8 written by *Page briefs: Tier 3a* ([#10](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/10)); pages 9–10 written by *Page briefs: Tier 3b* ([#11](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/11)); pages 11–12 written by *Page briefs: Tier 3c* ([#12](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/12)) |
 | Page content model | [`content-model.md`](content-model.md) | settled |
 | Site shell and page template | [`site-shell.md`](site-shell.md) | settled |
 | Learner setup and verification | [`learner-setup.md`](learner-setup.md) | settled |
 | Vocabulary | [`GLOSSARY.md`](../../GLOSSARY.md) | settled |
 | Framing decisions | [`docs/adr/`](../adr/) | settled (0001–0004) |
-| Handoff assembly and build order | this file, § Handoff | not yet written — owned by *Assemble the workshop spec for handoff* ([#13](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/13)) |
+| Handoff assembly and build order | this file, § Handoff | settled — assembled by *Assemble the workshop spec for handoff* ([#13](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/13)) |
 
 ## Ladder
 
@@ -88,6 +88,8 @@ A brief is **decision-complete**: a build session turns one brief into one page 
 
 Section skeleton. Every learner-facing string here is Thai final copy and is carried verbatim into the page record ([content-model.md](content-model.md)); the surrounding prose is English design material for the build session. The brief's header block also names the page's **`titleTh`**, the Thai heading the shell renders — final copy like every other Thai string, and the one learner-facing string that is not inside a section.
 
+**`titleTh` convention.** A heading is a short Thai noun phrase: no page number, no trailing punctuation, and never a repeat of a tier label ([GLOSSARY](../../GLOSSARY.md): *ชั้น*), which is what the sidebar groups by. English technical terms already in the ladder's vocabulary (`store`, `selector`, `async`, `middleware`) are allowed, as pages 7–12 do. A page that adds a new shape of state is named after the thing the learner builds (`ตะกร้าสินค้า`); a page whose work is a new way of reading or structuring the store is named after that technique (`ยอดรวมที่คำนวณจาก store`, `ห่อ store ด้วย middleware`). Settled for pages 1–6 by [Thai page headings (titleTh) for pages 1-6](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/14).
+
 ```markdown
 - **ชื่อหน้า (titleTh)**: <the Thai page heading, final copy>
 
@@ -118,4 +120,46 @@ The files the learner must write, in display order, by the same learner-project-
 
 ## Handoff
 
-Not yet written. Owned by *Assemble the workshop spec for handoff* ([#13](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/13)): one entry point a fresh build session can read end-to-end, a build order for the site, and a definition of done for the built workshop.
+Settled by *Assemble the workshop spec for handoff* ([#13](https://github.com/ArrayaWongsaita/dn_zustand_workshop/issues/13)). This section is the build session's entry point: read the parts above, then build the site in the order below.
+
+### What already exists
+
+The Vite + React scaffold, with Tailwind, the shadcn `@` alias, react-router and zustand installed (`package.json`, `vite.config.js`, `jsconfig.json`, `src/index.css`). The site's own store is written at `src/workshop/site-store.js`. Page 1 is built at `src/workshop/pages/01-counter/` as the shell prototype that validated the record shape: its behaviour and code are final, but its record still holds placeholder Thai copy and both files carry `PROTOTYPE NOTE` comments. The real shell and pages 2–12 do not exist yet.
+
+Two planning artifacts are **not** part of the site and are deleted in build step 6: `src/prototype/shell/` (the three rejected shell variants) and `scripts/smoke-shell.mjs` (its smoke check). The throwaway `research/zustand-v5-api` branch never merges; every fact the briefs cite from it is quoted in the briefs, so the build does not depend on it.
+
+### Build order
+
+1. **Shell and page template** — implement [site-shell.md](site-shell.md) and [content-model.md](content-model.md) § The page template:
+   - routes mounted once in `src/main.jsx`: `/` (home), `/start` (start-here), `/<slug>` (one page), unknown → home;
+   - the one page template, its seven sections in order, the goal-demo stage and the code-only reveal;
+   - the persistent sidebar grouped by the five tiers, rows built from the registry by `number`, the visited check, and previous/next;
+   - home (heading, five tier cards, the start-here card last) and `/start` (the Thai copy of [learner-setup.md](learner-setup.md) verbatim, teaching no Zustand code);
+   - the site store's settled semantics (visited on mount, revealed per page, session-only).
+   Replaces the Vite scaffold in `src/App.jsx` / `src/main.jsx`.
+2. **Finalize page 1** — remove the `PROTOTYPE NOTE` comments from `src/workshop/pages/01-counter/App.jsx` and `index.js`, and copy the final Thai copy (`briefTh`, `criteriaTh`, `hintsTh`, `trapsTh`) from [`pages/01-counter.md`](pages/01-counter.md) into the record.
+3. **Pages 2–12 in ladder order**, one per the authoring steps in [content-model.md](content-model.md) § Authoring a page: create the page folder mirroring the learner's `src/` layout, write the brief's *Solution code* files verbatim, write the record with the brief's Thai copy verbatim, register it in `src/workshop/pages/index.js`, and confirm the seven sections render.
+4. **Site-side tests as each page lands** — Vitest + React Testing Library, colocated `*.test.jsx`, one test per acceptance criterion driving `<Demo />`, and the `test` script in `package.json` ([learner-setup.md](learner-setup.md) § Site-side test suite). Stub `fetch` and `localStorage` as the briefs note. The criteria that need the Redux DevTools extension (pages 10, 11, 12) stay manual.
+5. **Dependencies** — add `immer` for the page 10 and page 12 demos. `devtools` needs no package (the browser extension only); there is no `@redux-devtools/extension` (see [`pages/10-middleware.md`](pages/10-middleware.md), the correction to the research doc).
+6. **Cleanup** — delete the prototype artifacts named above, drop scaffold files no surface uses, and confirm no demo imports Tailwind, shadcn, or any module from this repository.
+
+### Definition of done
+
+The built workshop is done when all of the following hold.
+
+- `/`, `/start` and `/<slug>` render; an unknown path falls back to home; nothing learner-facing ever names routing.
+- All twelve page folders exist and `src/workshop/pages/index.js` lists all twelve records in ladder order; the sidebar, home cards and previous/next all derive from that registry.
+- Every page renders the seven template sections in order, its Thai copy equal to its brief verbatim, and its `solutionFiles` in the brief's display order under the learner's own paths.
+- Home shows the five tier cards and the start-here card; `/start` carries [learner-setup.md](learner-setup.md)'s copy and teaches no Zustand code.
+- Site state matches [site-shell.md](site-shell.md) § State: `visited` marked on mount, `revealed` toggled per page, both session-only, no persistence, no progress percentage.
+- Every demo is plain React with inline styles and runs in a bare Vite + React project; no demo imports this repository's Tailwind, shadcn, or modules.
+- `npm run lint`, `npm run build` and `npm test` all pass. `npm test` covers every page with one passing test per acceptance criterion, colocated with its page.
+- A production build serves the fetched JSON on pages 7–12 (the `new URL(…, import.meta.url)` path) and the persisted cart rehydrates on reload.
+- No `PROTOTYPE NOTE` comments remain, and `src/prototype/` and `scripts/smoke-shell.mjs` are gone.
+- Learner-facing language is Thai; the only English a learner sees is the raw fetch error detail on pages 7 and 12.
+- **Not** part of done: deployment and hosting — the human handles it after the spec (map, Out of scope).
+
+### Still unsettled at handoff
+
+- **The spec is not committed or pushed.** `origin/main` holds only the initial commit; the spec home, every brief, the ADRs and the glossary live in the working tree and in local commits, while the tickets on the map link to `main`. The spec must be committed and pushed before a build session starts, or those links 404.
+- **The test toolchain is specified but not installed.** [learner-setup.md](learner-setup.md) fixes Vitest + React Testing Library and `npm test`; `package.json` has neither yet. Installing and configuring them is build step 4, not a design decision.
