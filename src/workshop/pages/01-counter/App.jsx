@@ -1,8 +1,5 @@
 import { useCounterStore } from './store/useCounterStore.js'
 
-// PROTOYPE NOTE: this file is both the goal demo and the learner-facing
-// solution code, so it must run in the learner's plain Vite project: no
-// Tailwind, no shadcn, no imports from this repository.
 const button = {
   padding: '0.4rem 0.9rem',
   border: '1px solid currentColor',

@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 
-// Shared presentation of the solution code blocks: every variant shows the
-// same bytes under the same learner-project paths, and owns only the reveal
-// toggle around them.
+// The reveal's code blocks: every page shows the same bytes under the same
+// learner-project paths, each with its own copy button. No syntax highlighting.
 function FileBlock({ file }) {
   const [copied, setCopied] = useState(false)
 
