@@ -39,6 +39,26 @@ A way the store silently misbehaves that a page both exposes and fixes; each tra
 _ไทย_: กับดัก
 _Avoid_: pitfall, gotcha, mistake
 
+**Slice**:
+A part of a store holding one concern's state and actions, written as a creator function; slices are assembled into a single bound store.
+_ไทย_: สไลซ์
+_Avoid_: module, chunk, piece, store part
+
+**Bound store**:
+The single store assembled from several slices, and the store the app actually imports and uses.
+_ไทย_: store ที่ประกอบแล้ว
+_Avoid_: combined store, root store, main store
+
+**Surface**:
+A distinct region of the learner's app that shows part of the app's state; two surfaces on one page read the same store directly instead of passing values between each other.
+_ไทย_: พื้นที่แสดงผล
+_Avoid_: component, view, panel, section
+
+**Middleware**:
+A wrapper around a store's state creator that changes how `set` behaves or adds a capability, such as persisting, draft updates, or devtools logging.
+_ไทย_: มิดเดิลแวร์
+_Avoid_: plugin, extension, wrapper
+
 **Start-here page**:
 The site's one-time setup surface at `/start`, outside the ladder: it carries the project setup commands, the file convention, and the setup check. It is site chrome, not a page.
 _ไทย_: หน้าเริ่มต้น

@@ -15,7 +15,7 @@ The learner builds all twelve pages in **one project**, created once on the star
 | Project | One Vite + React project named `zustand-workshop`, created on the start-here page and used for all twelve pages. |
 | Per page | The learner writes the files the brief's *Solution code* section lists, at exactly those paths. When a path repeats from an earlier page (`src/App.jsx`), the learner overwrites it. |
 | Store | One store file per page at `src/store/<name>Store.js` — `useCounterStore.js`, `useTodoStore.js`, `useCartStore.js`, and so on. Pages 9–12 may add further files under `src/store/` (slices, the bound store). |
-| Components | `src/App.jsx` holds the page's component. A page may add sibling components when its brief says so. |
+| Components | `src/App.jsx` holds the page's component. A page may add sibling components under `src/components/` when its brief says so. |
 | Not installed | react-router (routing is this repo's plumbing and is never taught), TypeScript, any CSS framework or component library, any test runner. |
 | Git | Not taught. If the learner commits, those commits are where earlier pages' code survives. |
 
