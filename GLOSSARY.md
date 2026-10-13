@@ -14,6 +14,11 @@ The person working through the ladder on their own machine, in their own Vite pr
 _ไทย_: ผู้เรียน
 _Avoid_: student, user, attendee
 
+**Learner project**:
+The Vite + React project the learner creates and writes their own code in; it is not this repository and it contains none of the site's source.
+_ไทย_: โปรเจกต์ของผู้เรียน
+_Avoid_: app, workspace, learner repo, sandbox
+
 **Ladder**:
 The fixed sequence of twelve exercises, ordered by difficulty.
 _ไทย_: บันได
@@ -33,6 +38,11 @@ _Avoid_: difficulty, level, category
 A way the store silently misbehaves that a page both exposes and fixes; each trap has exactly one owning page.
 _ไทย_: กับดัก
 _Avoid_: pitfall, gotcha, mistake
+
+**Start-here page**:
+The site's one-time setup surface at `/start`, outside the ladder: it carries the project setup commands, the file convention, and the setup check. It is site chrome, not a page.
+_ไทย_: หน้าเริ่มต้น
+_Avoid_: setup page, intro, page 0, onboarding
 
 **Page**:
 One exercise in the ladder: its own URL, exercise brief, goal demo, hints, and solution reveal.

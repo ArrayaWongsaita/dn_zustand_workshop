@@ -15,11 +15,12 @@ src/workshop/
     index.js                  the registry: all twelve records, in ladder order
     01-counter/
       index.js                the page record
-      Demo.jsx                the one implementation: the goal demo, and the source the reveal displays
-      store.js                the page's own store
+      App.jsx                 the one implementation: the goal demo, and the source the reveal displays
+      store/
+        useCounterStore.js    the page's own store
     09-slices/
       index.js
-      Demo.jsx
+      App.jsx
       store/
         cartSlice.js
         uiSlice.js
@@ -29,7 +30,9 @@ src/workshop/
 
 Rules:
 
-- The folder name is `<NN>-<slug>`, identical to the brief's filename stem, `docs/workshop/pages/<NN>-<slug>.md`. One page, one name: the folder, the brief file, and the record's `slug` are the same string, and the slug is the page's URL segment.
+- **A page folder mirrors the learner's `src/` layout.** A displayed file's path inside the page folder is the path it has in the learner's own project, minus the `src/` the folder already stands in for: `01-counter/App.jsx` is displayed as `src/App.jsx`, and `01-counter/store/useCounterStore.js` as `src/store/useCounterStore.js`. This is what makes byte-identical display possible: every import inside a displayed file resolves in this repository and in the learner's project, under the same relative path, so the reveal never has to rewrite a string it shows. The folder also holds site-side files that are never displayed, `index.js` above all.
+
+- The folder name is `<NN>-<slug>`, identical to the brief's filename stem, `docs/workshop/pages/<NN>-<slug>.md`. One page, one name: the folder, the brief file, and the record's `slug` are the same string, and the slug is the page's URL segment. The record's `number` field is the page's position in the ladder; the shell renders it as the page number and uses it for previous/next ([site-shell.md](site-shell.md)).
 - `pages/index.js` is a hand-written array in ladder order. Pages are not discovered by a glob: ladder order is teaching data, not a filesystem fact.
 - Each page folder owns its store, per the one-store-per-page rule; only page 11 is deliberately global. The site's own store lives outside every page folder, at `src/workshop/site-store.js`, so a page folder never mixes teaching state with site state.
 - Routing is invisible plumbing (see [ADR-0003](../adr/0003-learners-never-clone-this-repo.md)): the slug is a URL segment and nothing learner-facing ever names routing.
@@ -40,9 +43,9 @@ A page record is a plain object in `src/workshop/pages/<NN>-<slug>/index.js`, de
 
 ```js
 // src/workshop/pages/01-counter/index.js
-import Demo from './Demo.jsx'
-import demoSource from './Demo.jsx?raw'
-import storeSource from './store.js?raw'
+import App from './App.jsx'
+import appSource from './App.jsx?raw'
+import storeSource from './store/useCounterStore.js?raw'
 
 export default {
   number: 1,
@@ -53,10 +56,10 @@ export default {
   criteriaTh: ['…'],
   hintsTh: ['…'],
   trapsTh: '…',
-  Demo,
+  Demo: App,
   solutionFiles: [
     { name: 'src/store/useCounterStore.js', source: storeSource },
-    { name: 'src/App.jsx', source: demoSource },
+    { name: 'src/App.jsx', source: appSource },
   ],
 }
 ```
@@ -80,7 +83,7 @@ All fields are required; a record has no optional fields. Every page has a trap 
 
 ## One implementation for the goal demo and the solution
 
-A page has exactly one implementation of its behaviour: `Demo.jsx`. It is what the learner sees as the goal demo, and its source is what the solution reveal displays. There is no separate goal implementation, and the reveal mounts no second copy. See [ADR-0004](../adr/0004-one-implementation-per-page.md).
+A page has exactly one implementation of its behaviour: the folder's `App.jsx`, displayed to the learner as `src/App.jsx`. It is what the learner sees as the goal demo, and its source is what the solution reveal displays — the record's `Demo` field holds it. There is no separate goal implementation, and the reveal mounts no second copy. See [ADR-0004](../adr/0004-one-implementation-per-page.md).
 
 Why: [ADR-0002](../adr/0002-solutions-published-on-the-learner-site.md) requires the content model to define how the goal demo and the solution are stored and kept in sync, and the cheapest correct sync is one artifact — two implementations would need a stated sync discipline and would drift silently. A second mount would also share the page's store, because a store is a module-level singleton: on page 11, where the store is global by design, the reveal's demo would move whenever the goal demo above it moved.
 
@@ -92,7 +95,9 @@ Consequences:
 
 ## Solution code
 
-The code a reveal displays is the file that actually runs, imported with Vite's `?raw`, so the string shown is byte-identical to the source and there is nothing to keep in sync by hand. Both imports coexist — `import Demo from './Demo.jsx'` renders the component, `import demoSource from './Demo.jsx?raw'` yields its source as a string.
+The code a reveal displays is the file that actually runs, imported with Vite's `?raw`, so the string shown is byte-identical to the source and there is nothing to keep in sync by hand. Both imports coexist — `import App from './App.jsx'` renders the component, `import appSource from './App.jsx?raw'` yields its source as a string.
+
+Because the displayed string is the running source, a page's implementation must run in the learner's own project, which is a bare Vite + React app: **plain React and inline styles only**, never this site's Tailwind classes or `components/ui` imports. The site supplies the frame around the demo, not its styling (see [site-shell.md](site-shell.md)).
 
 - A page may ship any number of files; the order of `solutionFiles` is display order.
 - `name` is the path as it must exist in the **learner's own Vite project**, not this repository's path (for example `src/store/useCounterStore.js`). The brief's Solution code section names the same files in the same order: the learner builds their own project from an empty folder, so the displayed path is instruction.
@@ -131,7 +136,7 @@ The brief is authoritative for the English design prose (learning objective, goa
 
 1. Read the brief at `docs/workshop/pages/<NN>-<slug>.md`.
 2. Create `src/workshop/pages/<NN>-<slug>/`.
-3. Write `store.js` and `Demo.jsx` (page 9 and later may split the store across several files).
+3. Write the learner-layout files (`App.jsx` and its store, in the learner's own paths; page 9 and later may split the store across several files).
 4. Fill `index.js` with the record, copying the brief's Thai strings verbatim.
 5. List the learner's files in `solutionFiles`, in the order the brief names them, with `?raw` imports.
 6. Add the record to `src/workshop/pages/index.js` at its ladder position.
