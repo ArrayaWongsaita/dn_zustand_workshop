@@ -18,5 +18,6 @@ pnpm install
 pnpm dev      # dev server
 pnpm build    # production build
 pnpm lint     # oxlint
+pnpm test     # vitest (component, page and shell tests)
 pnpm preview  # preview the build
 ```

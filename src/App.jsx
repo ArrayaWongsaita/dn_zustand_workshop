@@ -1,30 +1,28 @@
-import { Link, Route, Routes } from 'react-router'
-import PrototypeApp from './prototype/shell/PrototypeApp.jsx'
+import { Navigate, Route, Routes, useParams } from 'react-router'
+import Home from './workshop/shell/Home.jsx'
+import PageTemplate from './workshop/shell/PageTemplate.jsx'
+import { findPageBySlug } from './workshop/shell/registry.js'
+import Shell from './workshop/shell/Shell.jsx'
+import StartHere from './workshop/shell/StartHere.jsx'
 
-// Routing is invisible plumbing (ADR-0003). Nothing learner-facing names it.
-// The workshop site itself has no routes yet: the shell is being prototyped
-// under /prototype/shell (see src/prototype/shell/README.md).
-function Landing() {
-  return (
-    <div className="mx-auto flex min-h-screen max-w-xl flex-col justify-center gap-4 p-8">
-      <h1 className="text-xl font-medium">Zustand workshop — site shell prototype</h1>
-      <p className="text-sm text-muted-foreground">
-        โปรโตไทป์ชั่วคราวสำหรับเลือกโครงเว็บ (ticket #7) ยังไม่ใช่ตัวเวิร์กช็อปจริง
-      </p>
-      <Link className="text-sm underline" to="/prototype/shell">
-        ไปที่โปรโตไทป์ /prototype/shell
-      </Link>
-    </div>
-  )
+// Routing is invisible plumbing (ADR-0003): nothing learner-facing names it.
+// One route per surface; a path matching nothing falls back to home.
+function PageRoute() {
+  const { slug } = useParams()
+  const page = findPageBySlug(slug)
+
+  return page ? <PageTemplate page={page} /> : <Navigate to="/" replace />
 }
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/prototype/shell" element={<PrototypeApp />} />
-      <Route path="/prototype/shell/:slug" element={<PrototypeApp />} />
-      <Route path="*" element={<Landing />} />
+      <Route element={<Shell />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/start" element={<StartHere />} />
+        <Route path="/:slug" element={<PageRoute />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
     </Routes>
   )
 }
